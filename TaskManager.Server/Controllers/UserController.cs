@@ -11,9 +11,11 @@ namespace TaskManager.Server.Controllers
     public class UserController :ControllerBase
     {
         private readonly UserService _userService;
-        public UserController(UserService userService)
+        private readonly JwtService _jwtService;
+        public UserController(UserService userService, JwtService jwtService)
         {
             _userService = userService;
+            _jwtService = jwtService;
         }
 
         [HttpGet]
@@ -54,7 +56,15 @@ namespace TaskManager.Server.Controllers
             bool validPassword = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
 
             if (!validPassword) return Unauthorized("Nieprawidłowy login lub hasło");
+            var token = _jwtService.GenerateToken(user);
             return user;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(Guid id)
+        {
+            var deletedUser = await _userService.DeleteUserAsync(id);
+            return deletedUser ? NoContent() : NotFound();
         }
     }
 }

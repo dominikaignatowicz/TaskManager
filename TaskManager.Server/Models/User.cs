@@ -8,7 +8,7 @@
         public string Password { get; set; }
         public bool EmailConfirmed { get; set; } = false;
         public string? Login {  get; set; }
-        public ICollection<TaskAssigment> TaskAssigments { get; set; }
+        public ICollection<TaskAssignment> TaskAssigments { get; set; }
 
     }
 }

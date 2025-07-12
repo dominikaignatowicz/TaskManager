@@ -1,6 +1,6 @@
 ﻿namespace TaskManager.Server.Models
 {
-    public class TaskAssigment
+    public class TaskAssignment
     {
         public Guid TaskId { get; set; }
         public TaskItem Task { get; set; }

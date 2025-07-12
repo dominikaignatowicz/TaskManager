@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManager.Server.AppDb;
 
@@ -11,9 +12,11 @@ using TaskManager.Server.AppDb;
 namespace TaskManager.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250712174306_TaskItem")]
+    partial class TaskItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace TaskManager.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManager.Server.Models.TaskAssignment", b =>
+            modelBuilder.Entity("TaskManager.Server.Models.TaskAssigment", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -37,7 +40,7 @@ namespace TaskManager.Server.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskAssignments");
+                    b.ToTable("TaskAssigments");
                 });
 
             modelBuilder.Entity("TaskManager.Server.Models.TaskItem", b =>
@@ -107,10 +110,10 @@ namespace TaskManager.Server.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("TaskManager.Server.Models.TaskAssignment", b =>
+            modelBuilder.Entity("TaskManager.Server.Models.TaskAssigment", b =>
                 {
                     b.HasOne("TaskManager.Server.Models.TaskItem", "Task")
-                        .WithMany("TaskAssignments")
+                        .WithMany("TaskAssigments")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -139,7 +142,7 @@ namespace TaskManager.Server.Migrations
 
             modelBuilder.Entity("TaskManager.Server.Models.TaskItem", b =>
                 {
-                    b.Navigation("TaskAssignments");
+                    b.Navigation("TaskAssigments");
                 });
 
             modelBuilder.Entity("TaskManager.Server.Models.User", b =>

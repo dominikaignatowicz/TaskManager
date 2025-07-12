@@ -12,6 +12,6 @@
         public Guid CreatedByUserId { get; set; }
         public User CreatedBy {  get; set; }
 
-        public ICollection<TaskAssigment> TaskAssigments { get; set; }
+        public ICollection<TaskAssignment> TaskAssignments { get; set; }
     }
 }
