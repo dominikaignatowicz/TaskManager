@@ -33,8 +33,12 @@ namespace TaskManager.Server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(RegisterDto registerUser)
+        public async Task<ActionResult<User>> Register([FromBody]RegisterDto registerUser)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var user = new User
             {
                 Name = registerUser.Name + " " + registerUser.LastName,
@@ -43,7 +47,7 @@ namespace TaskManager.Server.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(registerUser.Password),
             };
 
-            _userService.CreateUserAsync(user);
+            await _userService.CreateUserAsync(user);
             return Ok(user);
         }
 
